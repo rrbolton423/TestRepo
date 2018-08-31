@@ -1,0 +1,44 @@
+//
+//  ViewController.swift
+//  AFInstall
+//
+//  Created by Bear Cahill on 9/18/17.
+//  Copyright © 2017 Bear Cahill. All rights reserved.
+//
+
+import UIKit
+import Alamofire
+
+class ViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        fetchURL(url: "https://media.licdn.com/mpr/mpr/shrink_100_100/AAEAAQAAAAAAAANyAAAAJGRlZTNlZDQwLTk4YTItNDA1MS04MzBjLWJmNGQ5M2RmZGUxYw.png")
+    }
+
+    func fetchURL(url : String) {
+        Alamofire.download(url).responseData { (response) in
+            if let data = response.value {
+                let img = UIImage.init(data: data)
+                let iv = UIImageView.init(frame: self.view.frame)
+                iv.image = img
+                iv.contentMode = .scaleAspectFit
+                DispatchQueue.main.async {
+                    self.view.addSubview(iv)
+                }
+            }
+        }
+    }
+    
+}
+
